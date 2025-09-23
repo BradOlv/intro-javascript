@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú de Ejercicios JS</title>
+</head>
+<body>
+    <h1>Mis Ejercicios de JavaScript - Bradley Oliva</h1>
+    <p>Haga clic en un botón para ejecutar un ejercicio.</p>
+
+    <button onclick="cargarEjercicio('E5-año-bisiesto.js')">Ejercicio 5</button>
+    <button onclick="cargarEjercicio('E10-VocaloConsonante.js')">Ejercicio 10</button>
+    <button onclick="cargarEjercicio('E3-tercer-ejercicio.js')">Ejercicio 12</button>
+    <button onclick="cargarEjercicio('E4-cuarto-ejercicio.js')">Ejercicio 13</button>
+    <button onclick="cargarEjercicio('')">Ejercicio 28</button>
+    <button onclick="cargarEjercicio('E10-VocaloConsonante.js')">Ejercicio 29</button>
+
+    <div id="contenedor-script"></div>
+
+    <script>
+        function cargarEjercicio(nombreArchivo) {
+            const contenedor = document.getElementById('contenedor-script');
+            contenedor.innerHTML = ''; // Limpia el script anterior
+            
+            const nuevoScript = document.createElement('script');
+            nuevoScript.src = nombreArchivo;
+            contenedor.appendChild(nuevoScript);
+            
+            console.log(`Ejecutando ${nombreArchivo}...`);
+        }
+    </script>
+</body>
+</html>
