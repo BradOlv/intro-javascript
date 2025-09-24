@@ -9,26 +9,63 @@
     <h1>Mis Ejercicios de JavaScript - Bradley Oliva</h1>
     <p>Haga clic en un botón para ejecutar un ejercicio.</p>
 
-    <button onclick="cargarEjercicio('E5-año-bisiesto.js')">Ejercicio 5</button>
-    <button onclick="cargarEjercicio('E10-VocaloConsonante.js')">Ejercicio 10</button>
-    <button onclick="cargarEjercicio('E3-tercer-ejercicio.js')">Ejercicio 12</button>
-    <button onclick="cargarEjercicio('E4-cuarto-ejercicio.js')">Ejercicio 13</button>
-    <button onclick="cargarEjercicio('')">Ejercicio 28</button>
-    <button onclick="cargarEjercicio('E10-VocaloConsonante.js')">Ejercicio 29</button>
+    <button onclick="cargarEjercicio('E5-año-bisiesto.js')">Ejercicio 5: Año bisiesto</button>
+    <button onclick="cargarEjercicio('E10-VocaloConsonante.js')">Ejercicio 10: Vocal o consonante</button>
+    <button onclick="cargarEjercicio('E12-suma1al50.js')">Ejercicio 12: Suma 1 al 50</button>
+    <button onclick="cargarEjercicio('E13-calcularFactorial.js')">Ejercicio 13: Factorial</button>
+    <button onclick="cargarEjercicio('E28-numeroPrimo.js')">Ejercicio 28: Número primo</button>
+    <button onclick="cargarEjercicio('E29-ordenarArreglo.js')">Ejercicio 29: Ordenar arreglo</button>
+    <button onclick="repetirEjercicio()">Repetir último ejercicio</button>
 
     <div id="contenedor-script"></div>
 
     <script>
-        function cargarEjercicio(nombreArchivo) {
-            const contenedor = document.getElementById('contenedor-script');
-            contenedor.innerHTML = ''; // Limpia el script anterior
-            
-            const nuevoScript = document.createElement('script');
-            nuevoScript.src = nombreArchivo;
-            contenedor.appendChild(nuevoScript);
-            
-            console.log(`Ejecutando ${nombreArchivo}...`);
+    let ultimoEjercicio = '';
+    let ultimaFuncion = '';
+
+    function cargarEjercicio(nombreArchivo) {
+        if (!nombreArchivo) return;
+        ultimoEjercicio = nombreArchivo;
+
+        // Detecta la función a llamar según el archivo
+        if (nombreArchivo === 'E10-VocaloConsonante.js') {
+            ultimaFuncion = 'ejercicio10';
+        } else if (nombreArchivo === 'E5-año-bisiesto.js') {
+            ultimaFuncion = 'ejercicio5';
+        } else if (nombreArchivo === 'E12-suma1al50.js') {
+            ultimaFuncion = 'ejercicio12';
+        } else if (nombreArchivo === 'E13-calcularFactorial.js') {
+            ultimaFuncion = 'ejercicio13';
+        } else if (nombreArchivo === 'E28-numeroPrimo.js') {
+            ultimaFuncion = 'ejercicio28';
+        } else if (nombreArchivo === 'E29-ordenarArreglo.js') {
+            ultimaFuncion = 'ejercicio29';
+        } else {
+            ultimaFuncion = '';
         }
+
+        const contenedor = document.getElementById('contenedor-script');
+        while (contenedor.firstChild) {
+            contenedor.removeChild(contenedor.firstChild);
+        }
+        const nuevoScript = document.createElement('script');
+        nuevoScript.src = nombreArchivo + '?t=' + new Date().getTime();
+        nuevoScript.onload = function() {
+            if (ultimaFuncion !== '' && typeof window[ultimaFuncion] === 'function') {
+                window[ultimaFuncion]();
+            }
+        };
+        contenedor.appendChild(nuevoScript);
+        console.log(`Ejecutando ${nombreArchivo}...`);
+    }
+
+    function repetirEjercicio() {
+        if (ultimoEjercicio !== '' && ultimaFuncion !== '') {
+            cargarEjercicio(ultimoEjercicio);
+        } else {
+            alert("Primero selecciona un ejercicio.");
+        }
+    }
     </script>
 </body>
 </html>
